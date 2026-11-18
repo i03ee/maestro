@@ -44,8 +44,19 @@ class EvidenceLog:
 
     def __init__(self, path: str | Path):
         self.path = Path(path)
+        # رأس السجل محفوظ في الذاكرة: بلا ذلك تقرأ كل كتابة الملف كاملاً
+        # فتتحوّل العملية إلى O(n²) تحت التزامن — وهو ما كشفه مقياس الحمل.
+        self._head_hash: str = GENESIS
+        self._count: int = 0
+        self._load_head()
 
     # -- قراءة -------------------------------------------------------------
+    def _load_head(self) -> None:
+        """يقرأ رأس السطر الأخير مرة واحدة عند الفتح."""
+        entries = self.entries()
+        self._count = len(entries)
+        self._head_hash = entries[-1].entry_hash if entries else GENESIS
+
     def entries(self) -> list[EvidenceEntry]:
         """كل السطور بالترتيب."""
         if not self.path.exists():
@@ -69,16 +80,14 @@ class EvidenceLog:
 
     @property
     def head_hash(self) -> str:
-        """بصمة آخر سطر."""
-        entries = self.entries()
-        return entries[-1].entry_hash if entries else GENESIS
+        """بصمة آخر سطر (محفوظة في الذاكرة)."""
+        return self._head_hash
 
     # -- كتابة -------------------------------------------------------------
     def append(self, kind: str, payload: dict[str, Any]) -> str:
         """يضيف سطراً جديداً ويعيد بصمته."""
-        entries = self.entries()
-        prev_hash = entries[-1].entry_hash if entries else GENESIS
-        seq = len(entries) + 1
+        prev_hash = self._head_hash
+        seq = self._count + 1
         entry_hash = hashlib.sha256(
             f"{prev_hash}|{seq}|{kind}|{_canonical(payload)}".encode("utf-8")
         ).hexdigest()
@@ -92,6 +101,8 @@ class EvidenceLog:
         self.path.parent.mkdir(parents=True, exist_ok=True)
         with self.path.open("a", encoding="utf-8") as handle:
             handle.write(json.dumps(line, ensure_ascii=False, sort_keys=True) + "\n")
+        self._head_hash = entry_hash
+        self._count = seq
         return entry_hash
 
     # -- تحقق --------------------------------------------------------------
