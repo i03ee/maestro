@@ -103,10 +103,14 @@ class CapabilityRunner:
             max_tokens=int(doc_budget.get("max_tokens", 100_000)),
         )
         scoped = replace(self.router, budget=budget)
+        # سقف الإخراج يُشتقّ من ميزانية المهمة: مهمة بميزانية 1000 رمز لا
+        # تستطيع أن تطلب 1024 رمز إخراج. الافتراضي 1024 أو ميزانية المهمة
+        # أيهما أصغر، ويمكن تجاوزه صراحةً بـmax_output_tokens.
+        default_output = min(1024, int(doc_budget.get("max_tokens", 1024)))
         request = CompletionRequest(
             capability=capability,
             prompt=spec.render_prompt(str(doc.get("intent", ""))),
-            max_output_tokens=int(doc_budget.get("max_output_tokens", 1024)),
+            max_output_tokens=int(doc_budget.get("max_output_tokens", default_output)),
             tools=tuple(spec.required_tools),
             authority=authority,
         )

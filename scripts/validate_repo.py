@@ -42,7 +42,10 @@ REQUIRED_FILES: tuple[str, ...] = (
     "src/maestro/company/topology.py",
     "src/maestro/company/registry.py",
     "docs/CAPABILITY_CATALOGUE.md",
+    "docs/AC_EVIDENCE.md",
     "scripts/catalogue_report.py",
+    "scripts/verify_acceptance.py",
+    "examples/plugin_minimal/minimal_provider.py",
     ".github/workflows/ci.yml",
 )
 
@@ -175,6 +178,18 @@ def check_company_catalogue() -> None:
         _fail(f"وثيقة الكتالوج انحرفت عن الشيفرة:\n{result.stdout}{result.stderr}")
 
 
+def check_acceptance_evidence() -> None:
+    """وثيقة الدليل مطابقة للشيفرة (والشواهد تُشغَّل في خط الأنابيب)."""
+    result = subprocess.run(
+        [sys.executable, "scripts/verify_acceptance.py", "--check-docs"],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+    )
+    if result.returncode != 0:
+        _fail(f"وثيقة القبول انحرفت عن الشيفرة:\n{result.stdout}{result.stderr}")
+
+
 def main() -> int:
     """يشغّل كل الفحوص ويعيد رمز الخروج."""
     checks = (
@@ -186,6 +201,7 @@ def main() -> int:
         check_ci_is_strict,
         check_protocol_declares_no_error_rates,
         check_company_catalogue,
+        check_acceptance_evidence,
     )
     for check in checks:
         check()
