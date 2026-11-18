@@ -58,7 +58,9 @@ class PydanticAIProvider:
                 "طبقة الوكلاء غير مثبّتة. ثبّت المجموعة الاختيارية: pip install -e '.[agent]'"
             )
         result = run_sync(lambda: self._run(request))
-        usage = result.usage()
+        usage = result.usage
+        if callable(usage):  # PydanticAI 2.70 جعلها خاصية؛ ما قبلها دالة
+            usage = usage()
         return CompletionResponse(
             text=str(result.output),
             tokens_in=int(getattr(usage, "input_tokens", 0) or 0),
