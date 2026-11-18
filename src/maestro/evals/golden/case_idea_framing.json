@@ -1,0 +1,21 @@
+{
+  "ir_version": "1.0",
+  "capability": "commercial.idea_framing",
+  "intent": "صياغة فكرة منصة تجارة جمال بثلاث لغات",
+  "authority": 1,
+  "steps": [
+    {
+      "id": "s1",
+      "agent": "idea_framer",
+      "action": "صياغة الفكرة",
+      "tools": [
+        "model.generate"
+      ]
+    }
+  ],
+  "budget": {
+    "max_tokens": 12000,
+    "max_cost_usd": 0.5,
+    "max_wall_seconds": 120
+  }
+}

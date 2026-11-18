@@ -49,6 +49,13 @@ REQUIRED_FILES: tuple[str, ...] = (
     "src/maestro/producers/idea.py",
     "src/maestro/producers/research.py",
     "src/maestro/producers/structured.py",
+    "src/maestro/evals/cases.py",
+    "src/maestro/evals/runner.py",
+    "docs/RUNBOOK.md",
+    "docs/DELIVERY_PACK.md",
+    "scripts/eval_check.py",
+    "scripts/load_check.py",
+    "scripts/build_delivery_pack.py",
     ".github/workflows/ci.yml",
 )
 

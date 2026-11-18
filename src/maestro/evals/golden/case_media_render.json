@@ -1,0 +1,8 @@
+{
+  "ir_version": "1.0",
+  "capability": "media.render",
+  "intent": "توليد صورة بطاقة عرض من وصف منتج",
+  "authority": 1,
+  "steps": [{"id": "s1", "agent": "visual_renderer", "action": "توليد الصورة", "tools": ["render.image"]}],
+  "budget": {"max_tokens": 8000, "max_cost_usd": 0.2, "max_wall_seconds": 120}
+}

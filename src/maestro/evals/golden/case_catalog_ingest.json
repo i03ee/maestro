@@ -1,0 +1,14 @@
+{
+  "ir_version": "1.0",
+  "capability": "catalog.ingest",
+  "intent": "تحرير بطاقة منتج واحد بثلاث لغات",
+  "authority": 2,
+  "critical": true,
+  "steps": [
+    {"id": "s1", "agent": "catalog_writer", "action": "تحرير البطاقة", "tools": ["model.generate"]},
+    {"id": "s2", "agent": "catalog_verifier", "action": "التحقق", "tools": []}
+  ],
+  "budget": {"max_tokens": 8000, "max_cost_usd": 0.25, "max_wall_seconds": 120},
+  "redundancy": {"ensemble": ["local", "api", "fallback"], "min_agreement": 2},
+  "evidence": {"required": true, "artifacts": ["catalog.json"]}
+}

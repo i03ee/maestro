@@ -41,6 +41,13 @@ class _Handler(BaseHTTPRequestHandler):
         return
 
 
+class _Server(ThreadingHTTPServer):
+    """خادم الاختبار: queue قبول واسع لتفادي انتظار ثانية تحت التزامن."""
+
+    request_queue_size = 128
+    daemon_threads = True
+
+
 class HttpProviderCase(unittest.TestCase):
     """خادم محلي لكل اختبار."""
 
@@ -53,7 +60,7 @@ class HttpProviderCase(unittest.TestCase):
             "choices": [{"index": 0, "message": {"role": "assistant", "content": "نتيجة"}}],
             "usage": {"prompt_tokens": 120, "completion_tokens": 45},
         }
-        self.server = ThreadingHTTPServer(("127.0.0.1", 0), _Handler)
+        self.server = _Server(("127.0.0.1", 0), _Handler)
         self.thread = threading.Thread(target=self.server.serve_forever, daemon=True)
         self.thread.start()
         self.base_url = f"http://127.0.0.1:{self.server.server_address[1]}/v1"

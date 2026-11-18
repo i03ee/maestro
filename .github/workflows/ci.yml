@@ -38,6 +38,12 @@ jobs:
       - name: Acceptance witnesses (AC-01..AC-20)
         run: python3 scripts/verify_acceptance.py
 
+      - name: Evaluation sets
+        run: python3 scripts/eval_check.py
+
+      - name: Load check
+        run: python3 scripts/load_check.py --requests 80 --concurrency 16
+
       - name: Unit and contract tests
         run: python3 -m unittest discover -s tests -v
 
@@ -73,6 +79,12 @@ jobs:
 
       - name: Acceptance witnesses (AC-01..AC-20)
         run: python3 scripts/verify_acceptance.py
+
+      - name: Evaluation sets
+        run: python3 scripts/eval_check.py
+
+      - name: Load check
+        run: python3 scripts/load_check.py --requests 80 --concurrency 16
 
       - name: Full suite including the agent layer
         run: python3 -m unittest discover -s tests -v
