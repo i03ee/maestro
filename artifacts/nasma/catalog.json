@@ -1,0 +1,58 @@
+{
+  "products": [
+    {
+      "category": {
+        "ar": "العناية بالبشرة",
+        "en": "Skincare",
+        "ku": "چاودێری پێست"
+      },
+      "id": "sku-001",
+      "image": "https://cdn.example.com/sku-001.jpg",
+      "imageAlt": "سيروم الترطيب اليومي",
+      "name": {
+        "ar": "سيروم الترطيب اليومي",
+        "en": "Daily hydration serum",
+        "ku": "سیرەمی شێداری ڕۆژانە"
+      },
+      "price": 28000,
+      "slug": "daily-hydration-serum",
+      "tag": {
+        "ar": "ترطيب يومي",
+        "en": "Daily hydration",
+        "ku": "شێداری ڕۆژانە"
+      },
+      "tone": "rose"
+    },
+    {
+      "category": {
+        "ar": "العناية بالبشرة",
+        "en": "Skincare",
+        "ku": "چاودێری پێست"
+      },
+      "id": "sku-002",
+      "image": "https://cdn.example.com/sku-002.jpg",
+      "imageAlt": "واقي شمس SPF 50+",
+      "name": {
+        "ar": "واقي شمس SPF 50+",
+        "en": "Daily SPF 50+ sunscreen",
+        "ku": "پارێزەری خۆر SPF 50+"
+      },
+      "price": 32000,
+      "slug": "spf-50-sunscreen",
+      "tag": {
+        "ar": "حماية يومية",
+        "en": "Daily protection",
+        "ku": "پاراستنی ڕۆژانە"
+      },
+      "tone": "sand"
+    }
+  ],
+  "rejected": [
+    {
+      "id": "sku-003",
+      "problems": [
+        "السعر يجب أن يكون عدداً صحيحاً غير سالب بالدينار."
+      ]
+    }
+  ]
+}

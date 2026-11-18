@@ -1,0 +1,30 @@
+{
+  "published": [
+    "sku-001",
+    "sku-002"
+  ],
+  "rejected": [
+    {
+      "id": "sku-003",
+      "reasons": [
+        "السعر يجب أن يكون عدداً صحيحاً غير سالب بالدينار."
+      ]
+    }
+  ],
+  "status": "done",
+  "stage": "done",
+  "cost_usd": 0.00038158,
+  "tokens_in": 419,
+  "tokens_out": 733,
+  "attempts": [
+    {
+      "provider": "openrouter",
+      "model": "deepseek/deepseek-v4.1-flash-1017",
+      "status": "ok",
+      "detail": "",
+      "tokens_in": 419,
+      "tokens_out": 733,
+      "cost_usd": 0.000381584
+    }
+  ]
+}

@@ -20,6 +20,15 @@ class CapabilitySpec:
     critical: bool = False
     prompt_template_ar: str = "{intent}"
 
-    def render_prompt(self, intent: str) -> str:
-        """يبني نص الطلب من النيّة."""
-        return self.prompt_template_ar.format(intent=intent)
+    def render_prompt(self, intent: str, context: str = "") -> str:
+        """يبني نص الطلب من النيّة والسياق.
+
+        `context` هو حمولة `inputs` من مستند IR بصيغة JSON — الذي يجعل
+        النموذج يعرف **ماذا** يحرّر. بلا سياق، المطالبة نيّة بلا بيانات،
+        فيخترع النموذج ما لم يُعطَ إياه.
+        """
+        # استبدال نصّي لا `str.format`: قوالب المطالبة تحمل أقواس JSON
+        # حرّةً، و`format` كان يظنّها رموزاً ويRaise.
+        return (
+            self.prompt_template_ar.replace("{intent}", intent).replace("{context}", context)
+        )

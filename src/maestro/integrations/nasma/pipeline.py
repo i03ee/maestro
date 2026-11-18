@@ -17,7 +17,7 @@ from ...runtime.registry import CapabilityRegistry
 from ...runtime.runner import ExecutionReport
 from ...runtime.spec import CapabilitySpec
 from .catalog import NasmaProduct, product_from_row, validate_product
-from .prompts import ModelContractError, build_prompt, parse_response
+from .prompts import CONTRACT_PROMPT_AR, ModelContractError, build_prompt, parse_response
 
 CAPABILITY = "catalog.ingest"
 
@@ -32,7 +32,8 @@ def default_registry() -> CapabilityRegistry:
             required_tools=("model.generate",),
             default_authority=2,
             critical=True,
-            prompt_template_ar="{intent}",
+            # العقد ثابت في القالب، وبيانات المنتج تأتي من `inputs` كسياق.
+            prompt_template_ar=f"{CONTRACT_PROMPT_AR}\n\n{{intent}}\n\n{{context}}",
         )
     )
     return registry
@@ -91,7 +92,14 @@ def build_product_task(product: NasmaProduct) -> dict[str, Any]:
             },
         ],
         "inputs": {"product": product.to_catalog_entry()},
-        "budget": {"max_tokens": 8_000, "max_cost_usd": 0.25, "max_wall_seconds": 120},
+        # max_output_tokens صريح: الافتراضي في المشغّل 1024 وهو أصغر من
+        # ما تحتاجه بطاقة بثلاث لغات (قياس حيّ: الردّ انقطع عنده).
+        "budget": {
+            "max_tokens": 8_000,
+            "max_output_tokens": 4_000,
+            "max_cost_usd": 0.25,
+            "max_wall_seconds": 120,
+        },
         "redundancy": {"ensemble": ["local", "api", "fallback"], "min_agreement": 2},
         "evidence": {"required": True, "artifacts": ["catalog.json", "evidence.jsonl"]},
     }

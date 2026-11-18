@@ -15,6 +15,21 @@ from .catalog import LOCALES, NasmaProduct
 RESPONSE_FIELDS: tuple[str, ...] = ("id", "name", "tag", "description")
 
 
+#: نص العقد: ثابت، لأنّ القدرة واحدة والعقد واحد.
+CONTRACT_PROMPT_AR = (
+    "حرّر بطاقة منتج واحداً لمنصة «نَسمة» (تجارة جمال عراقية).\n"
+    "الأسلوب: هادئ، بلا مبالغة، بلا وعود علاجية غير مثبتة.\n"
+    "لا تخترع مكونات ولا أرقاماً ولا شهادات ولا لغةً إضافية.\n"
+    "أعد JSON واحداً فقط بالبنية التالية (بلا نصّ خارج JSON):\n"
+    '{\n'
+    '  "id": "<معرّف المنتج كما ورد في المدخلات>",\n'
+    '  "name": {"ar": "", "ku": "", "en": ""},\n'
+    '  "tag": {"ar": "", "ku": "", "en": ""},\n'
+    '  "description": {"ar": "", "ku": "", "en": ""}\n'
+    '}\n'
+)
+
+
 def build_prompt(product: NasmaProduct) -> str:
     """يبني نص الطلب: حقول المنتج بالعربية + عقد الردّ."""
     payload = {
@@ -31,12 +46,10 @@ def build_prompt(product: NasmaProduct) -> str:
         "description": {locale: "" for locale in LOCALES},
     }
     return (
-        "حرّر بطاقة منتج لمنصة «نَسمة» (تجارة جمال عراقية).\n"
-        "الأسلوب: هادئ، بلا مبالغة، بلا وعود medicinal أو علاجية غير مثبتة.\n"
-        "لا تخترع مكونات ولا أرقاماً ولا شهادات.\n\n"
+        f"{CONTRACT_PROMPT_AR}\n"
         "مدخلات:\n"
         f"{json.dumps(payload, ensure_ascii=False, indent=2)}\n\n"
-        "أعد JSON واحداً فقط بالبنية التالية (بلا نص خارج JSON):\n"
+        "أعد JSON واحداً فقط بهذه البنية (معرّف المنتج من المدخلات):\n"
         f"{json.dumps(contract, ensure_ascii=False, indent=2)}\n"
     )
 
