@@ -1,0 +1,44 @@
+{
+  "supplier": "demo-supplier",
+  "products": [
+    {
+      "id": "sku-001",
+      "name_ar": "سيروم الترطيب اليومي",
+      "name_ku": "سیرەمی شێداری ڕۆژانە",
+      "name_en": "Daily hydration serum",
+      "category_ar": "العناية بالبشرة",
+      "category_ku": "چاودێری پێست",
+      "category_en": "Skincare",
+      "price": "28000",
+      "slug": "daily-hydration-serum",
+      "image": "https://cdn.example.com/sku-001.jpg",
+      "tone": "rose"
+    },
+    {
+      "id": "sku-002",
+      "name_ar": "واقي شمس SPF 50+",
+      "name_ku": "پارێزەری خۆر SPF 50+",
+      "name_en": "Daily SPF 50+ sunscreen",
+      "category_ar": "العناية بالبشرة",
+      "category_ku": "چاودێری پێست",
+      "category_en": "Skincare",
+      "price": "32000",
+      "slug": "spf-50-sunscreen",
+      "image": "https://cdn.example.com/sku-002.jpg",
+      "tone": "sand"
+    },
+    {
+      "id": "sku-003",
+      "name_ar": "زيت تغذية الشعر",
+      "name_ku": "ڕۆنی خۆراکی قژ",
+      "name_en": "Nourishing hair oil",
+      "category_ar": "العناية بالشعر",
+      "category_ku": "چاودێری قژ",
+      "category_en": "Haircare",
+      "price": "-100",
+      "slug": "nourishing-hair-oil",
+      "image": "javascript:alert(1)",
+      "tone": "sage"
+    }
+  ]
+}
