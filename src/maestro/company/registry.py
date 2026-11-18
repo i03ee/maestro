@@ -48,27 +48,9 @@ def capability_to_ir(
     الموافقة البشرية **لا تُفترض**: قدرة صلاحيتها 3 تبقى مرفوضة (IR-04)
     ما لم يُمرَّر `human_approved=True` بعد موافقة مسجّلة فعلاً.
     """
-    document: dict[str, object] = {
-        "ir_version": "1.0",
-        "capability": capability.name,
-        "intent": intent,
-        "authority": capability.authority,
-        "critical": capability.critical,
-        "steps": [
-            {
-                "id": "s1",
-                "agent": capability.agent,
-                "action": capability.name_ar,
-                "tools": list(capability.tools),
-            }
-        ],
-        "budget": {"max_tokens": 20_000, "max_cost_usd": 1.0, "max_wall_seconds": 300},
-        "redundancy": {
-            "ensemble": list(capability.ensemble),
-            "min_agreement": capability.min_agreement,
-        },
-        "evidence": {"required": True, "artifacts": ["evidence.jsonl"]},
-    }
+    from .contracts import contract_for
+
+    document = contract_for(capability, intent)
     if human_approved:
         document["human_approval"] = True
     return document
