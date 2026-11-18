@@ -64,6 +64,7 @@ REQUIRED_FILES: tuple[str, ...] = (
     "docs/DELIVERY_PACK.md",
     "scripts/eval_check.py",
     "scripts/verify_all.py",
+    "scripts/live_run.py",
     "scripts/load_check.py",
     "scripts/build_delivery_pack.py",
     ".github/workflows/ci.yml",

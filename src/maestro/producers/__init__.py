@@ -5,6 +5,8 @@
 """
 
 from .idea import PrdResult, produce_prd
+from .live import LiveOutcome, run_live
+from .prompts import PROMPT_BUILDERS
 from .research import (
     CandidateResult,
     CompetitorResult,
@@ -13,7 +15,10 @@ from .research import (
 )
 
 __all__ = [
+    "LiveOutcome",
+    "PROMPT_BUILDERS",
     "PrdResult",
+    "run_live",
     "produce_prd",
     "CandidateResult",
     "CompetitorResult",

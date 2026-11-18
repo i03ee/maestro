@@ -1,0 +1,25 @@
+[
+  {
+    "url": "غير معروف",
+    "status": null,
+    "responded": false,
+    "detail": "not_a_url"
+  },
+  {
+    "url": "https://www.namshi.com/",
+    "status": null,
+    "responded": false,
+    "detail": "TimeoutError"
+  },
+  {
+    "url": "غير معروف",
+    "status": null,
+    "responded": false,
+    "detail": "not_a_url"
+  },
+  {
+    "url": "https://miswag.com/",
+    "status": 200,
+    "responded": true
+  }
+]

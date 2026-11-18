@@ -1,0 +1,81 @@
+{
+  "kind": "live-run",
+  "generated_at": "2026-11-18T12:16:13.942124+00:00",
+  "capabilities": [
+    "idea.prd",
+    "research.competitors",
+    "research.candidates"
+  ],
+  "outcomes": [
+    {
+      "capability": "idea.prd",
+      "provider": "openrouter",
+      "model": "deepseek/deepseek-v4.1-flash-1017",
+      "cost_usd": 0.00188909,
+      "tokens_in": 447,
+      "tokens_out": 3746,
+      "elapsed_ms": 28231,
+      "fallback_used": true,
+      "artefacts": [
+        "artifacts/prd.md",
+        "artifacts/user_stories.json"
+      ]
+    },
+    {
+      "capability": "research.competitors",
+      "provider": "openrouter",
+      "model": "deepseek/deepseek-v4.1-flash-1017",
+      "cost_usd": 0.00270952,
+      "tokens_in": 320,
+      "tokens_out": 5396,
+      "elapsed_ms": 31518,
+      "fallback_used": true,
+      "artefacts": [
+        "artifacts/market/competitor_matrix.csv"
+      ]
+    },
+    {
+      "capability": "research.candidates",
+      "provider": "openrouter",
+      "model": "deepseek/deepseek-v4.1-flash-1017",
+      "cost_usd": 0.00192046,
+      "tokens_in": 360,
+      "tokens_out": 3815,
+      "elapsed_ms": 32643,
+      "fallback_used": true,
+      "artefacts": [
+        "artifacts/decisions/decision_log.jsonl",
+        "artifacts/research/candidates.jsonl",
+        "artifacts/research/scans/scan_report.json"
+      ]
+    }
+  ],
+  "failures": [],
+  "total_cost_usd": 0.00651907,
+  "url_checks": [
+    {
+      "url": "غير معروف",
+      "status": null,
+      "responded": false,
+      "detail": "not_a_url"
+    },
+    {
+      "url": "https://www.namshi.com/",
+      "status": null,
+      "responded": false,
+      "detail": "TimeoutError"
+    },
+    {
+      "url": "غير معروف",
+      "status": null,
+      "responded": false,
+      "detail": "not_a_url"
+    },
+    {
+      "url": "https://miswag.com/",
+      "status": 200,
+      "responded": true
+    }
+  ],
+  "url_checks_responded": 1
+}

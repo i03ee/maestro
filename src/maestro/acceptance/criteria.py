@@ -41,21 +41,27 @@ CRITERIA: tuple[Criterion, ...] = (
         "تحويل الفكرة إلى متطلبات",
         "artifacts/prd.md, user_stories.json",
         "idea_produces_prd",
-        proof_kind_ar="بشواهد آلية — البيانات الحيّة معلّقة (تحتاج DEEPSEEK_API_KEY)",
+        proof_kind_ar=(
+            "شاهد آليّ (الآلية مُتحقَّقة) + artefact حيّ من نموذج حقيقي في artifacts/"
+        ),
     ),
     Criterion(
         "AC-03",
         "تحليل منافسين",
         "artifacts/market/competitor_matrix.csv",
         "research_produces_competitors",
-        proof_kind_ar="بشواهد آلية — البيانات الحيّة معلّقة (تحتاج DEEPSEEK_API_KEY)",
+        proof_kind_ar=(
+            "شاهد آليّ (الآلية مُتحقَّقة) + artefact حيّ من نموذج حقيقي في artifacts/"
+        ),
     ),
     Criterion(
         "AC-04",
         "البحث عن مكونات",
         "artifacts/research/candidates.jsonl",
         "research_produces_candidates",
-        proof_kind_ar="بشواهد آلية — البيانات الحيّة معلّقة (تحتاج DEEPSEEK_API_KEY)",
+        proof_kind_ar=(
+            "شاهد آليّ (الآلية مُتحقَّقة) + artefact حيّ من نموذج حقيقي في artifacts/"
+        ),
     ),
     Criterion(
         "AC-05",

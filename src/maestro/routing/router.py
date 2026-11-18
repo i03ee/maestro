@@ -64,7 +64,10 @@ class RoutingFailure(RuntimeError):
 
     def __init__(self, attempts: tuple[Attempt, ...]):
         self.attempts = attempts
-        summary = "; ".join(f"{a.provider}:{a.status}" for a in attempts) or "لا محاولات"
+        summary = "; ".join(
+            f"{a.provider}:{a.status}" + (f" ({a.detail[:160]})" if a.detail else "")
+            for a in attempts
+        ) or "لا محاولات"
         super().__init__(f"فشل التنفيذ على كل النماذج — {summary}")
 
 
