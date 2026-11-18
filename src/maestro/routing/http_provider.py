@@ -52,6 +52,16 @@ class OpenAICompatibleProvider:
             "max_tokens": request.max_output_tokens,
             "temperature": self.temperature,
         }
+        if profile.extra_body:
+            try:
+                extra = json.loads(profile.extra_body)
+            except json.JSONDecodeError as error:
+                raise ProviderError(
+                    f"extra_body في بطاقة {profile.name} ليس JSON صالحاً."
+                ) from error
+            if not isinstance(extra, dict):
+                raise ProviderError(f"extra_body في بطاقة {profile.name} ليس كائناً.")
+            payload.update(extra)
         headers = {
             "Content-Type": "application/json",
             "Accept": "application/json",
@@ -89,7 +99,15 @@ class OpenAICompatibleProvider:
             raise ProviderError("الردّ بلا اختيارات.")
         message = choices[0].get("message") or {}
         text = message.get("content")
-        if not isinstance(text, str):
+        if not isinstance(text, str) or not text.strip():
+            # نماذج التفكير تستهلك الرموز في reasoning ثم تُعيد content فارغاً.
+            # هذه رسالة تشخيص لا غموض: من رفعَ سقف الرموز أو خفّض الجهد.
+            reasoning = message.get("reasoning")
+            if isinstance(reasoning, str) and reasoning.strip():
+                raise ProviderError(
+                    "الردّ بلا نص: النموذج استهلك الرموز في التفكير (reasoning) ولم يُخرج "
+                    "إجابة. ارفع max_output_tokens أو اضبط reasoning.effort على low."
+                )
             raise ProviderError("الردّ بلا نص في message.content.")
         usage = data.get("usage") or {}
         tokens_in = int(usage.get("prompt_tokens", 0) or 0)
