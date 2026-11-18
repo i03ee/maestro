@@ -12,6 +12,7 @@
 | Saleor API | BSD-3-Clause | https://github.com/saleor/saleor | قبول عبر واجهة برمجية | محرّك التجارة في نَسمة |
 | Nimara e-commerce | BSD-3-Clause | https://github.com/mirumee/nimara-ecommerce | مراجع، غير مدمج | نمط واجهة للدراسة |
 | Locust | MIT | https://github.com/locustio/locust | قبول | طبقة الحمل بدل k6 |
+| setuptools | MIT | https://github.com/pypa/setuptools | قبول | أداة البناء فقط؛ لا تدخل الكود المشغَّل |
 
 ## مرفوض
 
