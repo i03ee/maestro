@@ -32,6 +32,9 @@ jobs:
       - name: Dependency and license gate
         run: python3 scripts/check_licenses.py
 
+      - name: Company catalogue check
+        run: python3 scripts/catalogue_report.py --check
+
       - name: Unit and contract tests
         run: python3 -m unittest discover -s tests -v
 
@@ -61,6 +64,9 @@ jobs:
 
       - name: Dependency and license gate
         run: python3 scripts/check_licenses.py
+
+      - name: Company catalogue check
+        run: python3 scripts/catalogue_report.py --check
 
       - name: Full suite including the agent layer
         run: python3 -m unittest discover -s tests -v
