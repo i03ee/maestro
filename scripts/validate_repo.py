@@ -14,6 +14,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT / "src"))
 
 REQUIRED_FILES: tuple[str, ...] = (
     "README.md",
@@ -37,6 +38,11 @@ REQUIRED_FILES: tuple[str, ...] = (
     "src/maestro/baseline/recorder.py",
     "src/maestro/evidence/log.py",
     "src/maestro/provenance/registry.py",
+    "src/maestro/company/catalogue.py",
+    "src/maestro/company/topology.py",
+    "src/maestro/company/registry.py",
+    "docs/CAPABILITY_CATALOGUE.md",
+    "scripts/catalogue_report.py",
     ".github/workflows/ci.yml",
 )
 
@@ -149,6 +155,26 @@ def check_protocol_declares_no_error_rates() -> None:
         _fail("docs/PROTOCOL.md لا يعلن قاعدة «بلا نسب خطأ» صراحةً.")
 
 
+def check_company_catalogue() -> None:
+    """كتالوج الشركة متّسق، والوثيقة المولَّدة مطابقة للشيفرة."""
+    try:
+        from maestro.company.topology import check_catalogue
+    except ImportError as error:  # pragma: no cover
+        _fail(f"تعذّر استيراد كتالوج الشركة: {error}")
+        return
+    problems = check_catalogue()
+    for problem in problems:
+        _fail(f"كتالوج الشركة: {problem}")
+    result = subprocess.run(
+        [sys.executable, "scripts/catalogue_report.py", "--check"],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+    )
+    if result.returncode != 0:
+        _fail(f"وثيقة الكتالوج انحرفت عن الشيفرة:\n{result.stdout}{result.stderr}")
+
+
 def main() -> int:
     """يشغّل كل الفحوص ويعيد رمز الخروج."""
     checks = (
@@ -159,13 +185,17 @@ def main() -> int:
         check_file_sizes,
         check_ci_is_strict,
         check_protocol_declares_no_error_rates,
+        check_company_catalogue,
     )
     for check in checks:
         check()
     if FAILURES:
         print(f"\nفشل التحقق: {len(FAILURES)} مشكلة.")
         return 1
-    print(f"سيرى التحقق: {len(REQUIRED_FILES)} ملفاً أساسياً، لا أسرار، لا محارف مسرّبة، كود يصرَّف.")
+    print(
+        f"سيرى التحقق: {len(REQUIRED_FILES)} ملفاً أساسياً، لا أسرار، لا محارف مسرّبة، "
+        "كود يصرَّف، وكتالوج الشركة متّسق."
+    )
     return 0
 
 

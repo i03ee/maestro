@@ -15,7 +15,7 @@ from typing import Any, Callable, Iterable
 from ..version import SUPPORTED_IR_VERSIONS
 from .rules import RULES_BY_ID, rule_ids
 
-CAPABILITY_PATTERN = re.compile(r"^[a-z][a-z0-9]*(\.[a-z][a-z0-9]*)+$")
+CAPABILITY_PATTERN = re.compile(r"^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)+$")
 ROLE_PATTERN = re.compile(r"^[a-z0-9][a-z0-9_.-]*$")
 
 #: الأدوات المسموحة. أي أداة خارج هذه القائمة تُرفض عند IR-08.
@@ -115,7 +115,7 @@ def _check_ir02(doc: dict[str, Any]) -> list[Finding]:
         return [
             _finding(
                 "IR-02",
-                "معرّف القدرة يجب أن يكون متدرّجاً بأحرف صغيرة، مثل catalog.ingest.",
+                "معرّف القدرة يجب أن يكون متدرّجاً بأحرف صغيرة، مثل catalog.ingest أو commercial.idea_framing.",
                 "capability",
             )
         ]
