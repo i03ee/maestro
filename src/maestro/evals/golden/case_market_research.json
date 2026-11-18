@@ -1,0 +1,8 @@
+{
+  "ir_version": "1.0",
+  "capability": "commercial.market_research",
+  "intent": "تحليل ثلاثة منافسين في سوق تجارة الجمال بالعراق",
+  "authority": 1,
+  "steps": [{"id": "s1", "agent": "market_researcher", "action": "جمع بيانات المنافسين", "tools": ["http.get", "vector.search"]}],
+  "budget": {"max_tokens": 16000, "max_cost_usd": 0.5, "max_wall_seconds": 180}
+}

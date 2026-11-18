@@ -1,0 +1,8 @@
+{
+  "ir_version": "1.0",
+  "capability": "research.project_research",
+  "intent": "البحث عن مكوّن جاهز لإعادة الاستخدام وفحص ترخيصه",
+  "authority": 1,
+  "steps": [{"id": "s1", "agent": "project_researcher", "action": "البحث وفحص الترخيص", "tools": ["http.get", "git.read", "vector.search"]}],
+  "budget": {"max_tokens": 16000, "max_cost_usd": 0.5, "max_wall_seconds": 180}
+}

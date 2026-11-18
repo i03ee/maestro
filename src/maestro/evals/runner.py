@@ -26,7 +26,7 @@ class EvalOutcome:
         return {"case_id": self.case_id, "ok": self.ok, "problems": list(self.problems)}
 
 
-def _registry() -> CapabilityRegistry:
+def eval_registry() -> CapabilityRegistry:
     """سجل قدرات يغطّي حالات التقييم.
 
     كتالوج الشركة فيه 24 قدرة، و«media.render» ليست منها: هي قدرة
@@ -66,7 +66,7 @@ def evaluate_case(case: EvalCase) -> EvalOutcome:
         budget=BudgetGuard(max_cost_usd=5.0, max_tokens=500_000),
     )
     runner = CapabilityRunner(
-        _registry(),
+        eval_registry(),
         router,
         PermissionGuard(
             allowed_capabilities=frozenset({case.capability}), max_authority=3

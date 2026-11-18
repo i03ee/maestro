@@ -56,6 +56,8 @@ REQUIRED_FILES: tuple[str, ...] = (
     "src/maestro/estimation/cost.py",
     "src/maestro/routing/local.py",
     "src/maestro/evals/cases.py",
+    "src/maestro/evals/golden/case_market_research.json",
+    "src/maestro/evals/golden/case_project_research.json",
     "src/maestro/evals/runner.py",
     "docs/RUNBOOK.md",
     "docs/DELIVERY_PACK.md",
