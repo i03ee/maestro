@@ -46,6 +46,9 @@ REQUIRED_FILES: tuple[str, ...] = (
     "scripts/catalogue_report.py",
     "scripts/verify_acceptance.py",
     "examples/plugin_minimal/minimal_provider.py",
+    "src/maestro/producers/idea.py",
+    "src/maestro/producers/research.py",
+    "src/maestro/producers/structured.py",
     ".github/workflows/ci.yml",
 )
 

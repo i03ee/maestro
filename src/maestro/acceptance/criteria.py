@@ -22,6 +22,7 @@ class Criterion:
     artefact: str
     proof_key: str | None
     not_proven_reason_ar: str = ""
+    proof_kind_ar: str = "بشواهد حيّة تُنفَّذ في كل تشغيل"
 
     @property
     def implemented(self) -> bool:
@@ -39,22 +40,22 @@ CRITERIA: tuple[Criterion, ...] = (
         "AC-02",
         "تحويل الفكرة إلى متطلبات",
         "artifacts/prd.md, user_stories.json",
-        None,
-        "لا يوجد بعد مُنتِج متطلبات: قدرة idea_framing ماسَجة في الكتالوج ولم تُنفَّذ بعد.",
+        "idea_produces_prd",
+        proof_kind_ar="بشواهد آلية — البيانات الحيّة معلّقة (تحتاج DEEPSEEK_API_KEY)",
     ),
     Criterion(
         "AC-03",
         "تحليل منافسين",
         "artifacts/market/competitor_matrix.csv",
-        None,
-        "يتطلّب بحثاً حيّاً بمصدر لكل صف — لم يُنفَّذ بعد.",
+        "research_produces_competitors",
+        proof_kind_ar="بشواهد آلية — البيانات الحيّة معلّقة (تحتاج DEEPSEEK_API_KEY)",
     ),
     Criterion(
         "AC-04",
         "البحث عن مكونات",
         "artifacts/research/candidates.jsonl",
-        None,
-        "يتطلّب تنفيذ قدرة البحث بمزوّد حيّ — لم يُنفَّذ بعد.",
+        "research_produces_candidates",
+        proof_kind_ar="بشواهد آلية — البيانات الحيّة معلّقة (تحتاج DEEPSEEK_API_KEY)",
     ),
     Criterion(
         "AC-05",

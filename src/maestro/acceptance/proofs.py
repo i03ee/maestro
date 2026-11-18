@@ -407,6 +407,158 @@ def plugin_works_without_core_change() -> ProofResult:
     return ProofResult(True, f"المثال يعمل عبر الموجّه: «{result.text[:24]}».")
 
 
+
+# ── AC-02 / AC-03 / AC-04 ─────────────────────────────────────────────────
+#: حمولة اصطناعية ثابتة تُثبت **آلية** المنتِج. البيانات الحيّة تحتاج مفتاح
+#: مزوّد — لذلك الشاهد يعلن ذلك صراحةً ولا يدّعي=live.
+_STUB_IDEA = {
+    "product_name": "منصة نَسمة",
+    "problem": "السوق العراقي للتجارة الإلكترونية Beaut.",
+    "features": [
+        {
+            "id": "F-1",
+            "title": "كتالوج بثلاث لغات",
+            "priority": "must",
+            "story": "كبصفحة تاجر.",
+            "criteria": ["الكتالوج يظهر بالعربية والكردية والإنجليزية", "لكل منتج سعر بالدينار"],
+        },
+        {
+            "id": "F-2",
+            "title": "سلة محلية",
+            "priority": "must",
+            "story": "كزبون.",
+            "criteria": ["السلة تحفظ بين الجلسات"],
+        },
+        {
+            "id": "F-3",
+            "title": "لوحة تحكم للمورد",
+            "priority": "should",
+            "story": "كمورد.",
+            "criteria": ["المورد يرى مخزونه"],
+        },
+    ],
+}
+
+_STUB_COMPETITORS = {
+    "competitors": [
+        {
+            "name": "متجر أ",
+            "url": "https://a.example",
+            "strengths": "تغطية واسعة",
+            "weaknesses": "لا محادثة",
+            "price_point": "مجاني",
+            "source": "https://a.example/pricing",
+        },
+        {
+            "name": "متجر ب",
+            "url": "https://b.example",
+            "strengths": "شحن سريع",
+            "weaknesses": "لا Kurdish",
+            "price_point": "اشتراك",
+            "source": "https://b.example/about",
+        },
+        {
+            "name": "متجر ج",
+            "url": "https://c.example",
+            "strengths": "أسعار واضحة",
+            "weaknesses": "لا تطبيق",
+            "price_point": "عمولة",
+            "source": "https://c.example",
+        },
+    ]
+}
+
+_STUB_CANDIDATES = {
+    "candidates": [
+        {
+            "name": "saleor",
+            "source": "https://github.com/saleor/saleor",
+            "spdx": "BSD-3-Clause",
+            "scan_result": "clean",
+            "decision": "allow",
+            "reason": "محرّك تجارة مثبت، رخصة تسمح بالاستعمال والتوزيع.",
+        },
+        {
+            "name": "k6",
+            "source": "https://github.com/grafana/k6",
+            "spdx": "AGPL-3.0",
+            "scan_result": "clean",
+            "decision": "deny",
+            "reason": "ترخيص نسخ قسري؛ يُستبدل بـLocust.",
+        },
+    ]
+}
+
+
+def idea_produces_prd() -> ProofResult:
+    """من فكرة إلى PRD وقصص مستخدمين — وكل ميزة must لها story ومعايير."""
+    from ..producers.idea import produce_prd, write_prd
+
+    result = produce_prd(json.dumps(_STUB_IDEA, ensure_ascii=False))
+    must = [feature for feature in result.features if feature.priority == "must"]
+    if not must:
+        return ProofResult(False, "لا توجد ميزة must — الاختبار لا يثبت الشرط.")
+    for feature in must:
+        if not feature.story.strip() or not feature.criteria:
+            return ProofResult(False, f"الميزة {feature.id} بلا story أو بلا معايير قبول.")
+    with tempfile.TemporaryDirectory() as tmp:
+        paths = write_prd(result, tmp)
+        for name, path in paths.items():
+            if not path.is_file() or not path.read_text(encoding="utf-8").strip():
+                return ProofResult(False, f"الملف «{name}» مفقود أو فارغ: {path}")
+        stories = json.loads(paths["user_stories"].read_text(encoding="utf-8"))
+        if len(stories) != len(result.features):
+            return ProofResult(False, "عدد القصص لا يطابق عدد الميزات.")
+    return ProofResult(
+        True,
+        f"{len(must)} ميزة must، لكل واحدة story ومعايير، والمخرجات كُتبت (بيانات اصطناعية).",
+    )
+
+
+def research_produces_competitors() -> ProofResult:
+    """منافسون: ثلاثة على الأقل، ومصدر لكل صف."""
+    import csv
+
+    from ..producers.research import produce_competitors, write_competitors
+
+    result = produce_competitors(json.dumps(_STUB_COMPETITORS, ensure_ascii=False))
+    if len(result.competitors) < 3:
+        return ProofResult(False, f"عدد المنافسين {len(result.competitors)} أقل من 3.")
+    with tempfile.TemporaryDirectory() as tmp:
+        path = write_competitors(result, tmp)
+        rows = list(csv.DictReader(path.read_text(encoding="utf-8").splitlines()))
+        if len(rows) < 3:
+            return ProofResult(False, "صفوف CSV أقل من 3.")
+        for row in rows:
+            if not row.get("source", "").strip():
+                return ProofResult(False, f"صف بلا مصدر: {row.get('name')}.")
+    return ProofResult(
+        True, f"{len(result.competitors)} منافسين، لكل صف مصدر (بيانات اصطناعية)."
+    )
+
+
+def research_produces_candidates() -> ProofResult:
+    """مرشّحون: أكثر من صفر، ومصدر ورخصة ونتيجة فحص وسبب لكل صف."""
+    from ..producers.research import produce_candidates, write_candidates
+
+    result = produce_candidates(json.dumps(_STUB_CANDIDATES, ensure_ascii=False))
+    if not result.candidates:
+        return ProofResult(False, "لا مرشّحين.")
+    with tempfile.TemporaryDirectory() as tmp:
+        paths = write_candidates(result, tmp)
+        for name, path in paths.items():
+            if not path.is_file() or not path.read_text(encoding="utf-8").strip():
+                return ProofResult(False, f"الملف «{name}» مفقود أو فارغ: {path}")
+        lines = paths["candidates"].read_text(encoding="utf-8").strip().splitlines()
+        for line in lines:
+            record = json.loads(line)
+            for field in ("source", "spdx", "scan_result", "decision", "reason"):
+                if not str(record.get(field, "")).strip():
+                    return ProofResult(False, f"سطر مرشّح بلا «{field}».")
+    return ProofResult(
+        True, f"{len(result.candidates)} مرشّحين، لكل سطر مصدر ورخصة وفحص وسبب (بيانات اصطناعية)."
+    )
+
 PROOFS: dict[str, Proof] = {
     "cli_run_creates_project": cli_run_creates_project,
     "licenses_decided": licenses_decided,
@@ -424,6 +576,9 @@ PROOFS: dict[str, Proof] = {
     "required_files_present": required_files_present,
     "rebuild_hash_is_stable": rebuild_hash_is_stable,
     "plugin_works_without_core_change": plugin_works_without_core_change,
+    "idea_produces_prd": idea_produces_prd,
+    "research_produces_competitors": research_produces_competitors,
+    "research_produces_candidates": research_produces_candidates,
 }
 
 
