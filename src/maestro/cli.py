@@ -100,6 +100,34 @@ def command_scaffold(args: argparse.Namespace) -> int:
     return 0
 
 
+def command_estimate(args: argparse.Namespace) -> int:
+    """يقدّر تكلفة قدرة قبل تنفيذها — بلا أي اتصال."""
+    from .estimation.cost import estimate_from_document
+    from .routing.deepseek import deepseek_fallback_profile, deepseek_flash_profile
+    from .routing.local import local_profile
+
+    document = json.loads(Path(args.ir).read_text(encoding="utf-8"))
+    profiles = {
+        "local": local_profile(),
+        "api": deepseek_flash_profile(off_peak=not args.peak),
+        "fallback": deepseek_fallback_profile(),
+    }
+    estimate = estimate_from_document(document, profiles_by_tier=profiles)
+    print(json.dumps(estimate.as_dict(), ensure_ascii=False, indent=2))
+    if not estimate.complete:
+        print(
+            "رُفض: نماذج بلا تسعير في السلسلة: "
+            + "، ".join(estimate.unpriced_models)
+        )
+        return 1
+    if estimate.max_cost_usd > args.max_cost_usd:
+        print(
+            f"رُفض: التقدير {estimate.max_cost_usd:.4f}$ يتجاوز السقف {args.max_cost_usd:.4f}$."
+        )
+        return 1
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     """محرّك الأوامر."""
     parser = argparse.ArgumentParser(prog="maestro", description="شركة مصغّرة من الوكلاء.")
@@ -116,6 +144,12 @@ def build_parser() -> argparse.ArgumentParser:
         "--human-approved", action="store_true", help="تسجيل موافقة بشرية للصلاحية 3"
     )
     run.set_defaults(func=command_run)
+
+    estimate = sub.add_parser("estimate", help="قدّر تكلفة قدرة قبل تنفيذها")
+    estimate.add_argument("--ir", required=True, help="مسار مستند IR")
+    estimate.add_argument("--peak", action="store_true", help="تسعير الذروة بدل الهدوء")
+    estimate.add_argument("--max-cost-usd", type=float, default=5.0, help="السقف المسموح")
+    estimate.set_defaults(func=command_estimate)
 
     scaffold = sub.add_parser("scaffold", help="أنشئ هيكل مشروع")
     scaffold.add_argument("--out", default="workspace", help="مجلد الهيكل")

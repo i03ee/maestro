@@ -49,6 +49,8 @@ REQUIRED_FILES: tuple[str, ...] = (
     "src/maestro/producers/idea.py",
     "src/maestro/producers/research.py",
     "src/maestro/producers/structured.py",
+    "src/maestro/estimation/cost.py",
+    "src/maestro/routing/local.py",
     "src/maestro/evals/cases.py",
     "src/maestro/evals/runner.py",
     "docs/RUNBOOK.md",
