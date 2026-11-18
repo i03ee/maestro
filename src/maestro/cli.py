@@ -128,6 +128,24 @@ def command_estimate(args: argparse.Namespace) -> int:
     return 0
 
 
+def command_doctor(args: argparse.Namespace) -> int:
+    """يفحص البيئة: هل شروط التشغيل متوفّرة؟"""
+    from .doctor.check import run_doctor
+
+    report = run_doctor()
+    for check in report.checks:
+        mark = "✔" if check.ok else "✘"
+        scope = "مطلوب" if check.required else "اختياري"
+        print(f"{mark} {check.name} ({scope}): {check.detail_ar}")
+    print()
+    if report.ok:
+        print("البيئة صالحة: كل البنود المطلوبة متوفّرة.")
+    else:
+        failed = "، ".join(check.name for check in report.failed_required)
+        print(f"البيئة غير صالحة: {failed}.")
+    return 0 if report.ok else 1
+
+
 def build_parser() -> argparse.ArgumentParser:
     """محرّك الأوامر."""
     parser = argparse.ArgumentParser(prog="maestro", description="شركة مصغّرة من الوكلاء.")
@@ -150,6 +168,9 @@ def build_parser() -> argparse.ArgumentParser:
     estimate.add_argument("--peak", action="store_true", help="تسعير الذروة بدل الهدوء")
     estimate.add_argument("--max-cost-usd", type=float, default=5.0, help="السقف المسموح")
     estimate.set_defaults(func=command_estimate)
+
+    doctor = sub.add_parser("doctor", help="افحص شروط التشغيل في البيئة")
+    doctor.set_defaults(func=command_doctor)
 
     scaffold = sub.add_parser("scaffold", help="أنشئ هيكل مشروع")
     scaffold.add_argument("--out", default="workspace", help="مجلد الهيكل")
