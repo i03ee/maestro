@@ -7,6 +7,7 @@
 
 from __future__ import annotations
 
+import json
 from dataclasses import dataclass, replace
 from typing import Any
 
@@ -43,6 +44,15 @@ class ExecutionReport:
             "attempts": [a.as_dict() for a in self.attempts],
             "evidence_hash": self.evidence_hash,
         }
+
+
+def _context_of(inputs: object) -> str:
+    """يحوّل `inputs` من مستند IR إلى سياق نصّي للمطالبة."""
+    if not inputs:
+        return ""
+    if isinstance(inputs, str):
+        return inputs
+    return json.dumps(inputs, ensure_ascii=False, indent=2, sort_keys=True)
 
 
 class CapabilityRunner:
@@ -109,7 +119,9 @@ class CapabilityRunner:
         default_output = min(1024, int(doc_budget.get("max_tokens", 1024)))
         request = CompletionRequest(
             capability=capability,
-            prompt=spec.render_prompt(str(doc.get("intent", ""))),
+            prompt=spec.render_prompt(
+                str(doc.get("intent", "")), _context_of(doc.get("inputs"))
+            ),
             max_output_tokens=int(doc_budget.get("max_output_tokens", default_output)),
             tools=tuple(spec.required_tools),
             authority=authority,
