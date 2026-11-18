@@ -76,7 +76,7 @@ class TestPydanticAIProvider(unittest.TestCase):
         from pydantic_ai.models.test import TestModel
 
         def failing(messages, info):
-            raise ModelAPIError("فشل مقصود")
+            raise ModelAPIError(model_name="failing-model", message="فشل مقصود")
 
         agent = Agent(
             model=FallbackModel(
