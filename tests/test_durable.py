@@ -66,6 +66,9 @@ class DurableCase(unittest.TestCase):
         self.capability_runner = CapabilityRunner(self.registry, self.router, self.permissions)
         self.runner = DurableRunner(self.capability_runner, self.journal)
 
+    def tearDown(self) -> None:
+        self._tmp.cleanup()
+
 
 class TestJournal(DurableCase):
     """السجل إلحاقي."""
