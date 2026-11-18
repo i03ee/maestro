@@ -59,7 +59,10 @@ class PydanticAIProvider:
             )
         result = run_sync(lambda: self._run(request))
         usage = result.usage
-        if callable(usage):  # PydanticAI 2.70 جعلها خاصية؛ ما قبلها دالة
+        # في 2.70 صارت `usage` خاصية تُعيد كائن RunUsage؛ استدعاؤها يُطلق
+        # تحذير إهمال. والفحص بالسمات لا بالـcallable: كائن RunUsage نفسه
+        # يحمل __call__ فيبدو قابلاً للاستدعاء وهو ليس كذلك.
+        if not hasattr(usage, "input_tokens"):
             usage = usage()
         return CompletionResponse(
             text=str(result.output),
