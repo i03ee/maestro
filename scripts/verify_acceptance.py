@@ -39,11 +39,17 @@ def render_documentation() -> str:
         f"والمتبقّي **{len(pending)}** غير مُثبَت بعد (مع سبب النقص)."
     )
     lines.append("")
+    lines.append(
+        "**نوع الشاهد** يفرّق بين شاهدين حيّين (بيانات حقيقية) وشاهد آلية "
+        "(الآلية مُتحقَّقة ببيانات اصطناعية، والبيانات الحيّة معلّقة حتى "
+        "يصل مفتاح المزوّد)."
+    )
+    lines.append("")
     lines.append("| المعيار | العنوان | الدليل المسمّى | الحالة | الشاهد |")
     lines.append("|---|---|---|---|---|")
     for criterion in CRITERIA:
         if criterion.implemented:
-            state = "مُثبَت"
+            state = f"مُثبَت — {criterion.proof_kind_ar}"
             proof = f"`{criterion.proof_key}`"
         else:
             state = "غير مُثبَت بعد"
