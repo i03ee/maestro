@@ -121,6 +121,43 @@ def _check_writable() -> DoctorCheck:
     return DoctorCheck("قابلة للكتابة", required=True, ok=True, detail_ar="نعم")
 
 
+def _check_local_model() -> DoctorCheck:
+    """هل يوجد خادم محلي متوافق مع OpenAI؟ (اختياري)
+
+    لا يُعدّ غيابُه فشلاً: المشروع يعمل بلا نموذج محلي. لكن **يُذكر**
+    صراحةً حتى لا يُظنّ أن الطبقة المحلية موجودة وهي ليست.
+    """
+    import urllib.error
+    import urllib.request
+
+    from ..routing.local import DEFAULT_LOCAL_BASE_URL
+
+    base_url = os.environ.get("MAESTRO_LOCAL_BASE_URL", DEFAULT_LOCAL_BASE_URL)
+    try:
+        with urllib.request.urlopen(f"{base_url.rstrip('/')}/models", timeout=2) as response:
+            payload = response.read().decode("utf-8")
+    except (urllib.error.URLError, OSError, ValueError):
+        return DoctorCheck(
+            name="النموذج المحلي",
+            required=False,
+            ok=False,
+            detail_ar=f"لا خادم محلي على {base_url} — الطبقة المحلية غير متاحة",
+        )
+    models = 0
+    try:
+        import json
+
+        models = len(json.loads(payload).get("data", []))
+    except Exception:  # noqa: BLE001 — الردّ غريب لا يمنع الفحص
+        models = 0
+    return DoctorCheck(
+        name="النموذج المحلي",
+        required=False,
+        ok=models > 0,
+        detail_ar=f"متاح على {base_url} — {models} نموذجاً",
+    )
+
+
 def _check_gates() -> DoctorCheck:
     script = Path(__file__).resolve().parent.parent.parent.parent / "scripts" / "validate_repo.py"
     if not script.is_file():
@@ -141,6 +178,7 @@ def run_doctor() -> DoctorReport:
         _check_git(),
         _check_agent_layer(),
         _check_api_key(),
+        _check_local_model(),
         _check_gates(),
     )
     return DoctorReport(checks=checks)
