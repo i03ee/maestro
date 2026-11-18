@@ -1,0 +1,893 @@
+{
+  "contracts": {
+    "commercial.business_model": {
+      "authority": 2,
+      "budget": {
+        "max_cost_usd": 1.0,
+        "max_tokens": 20000,
+        "max_wall_seconds": 300
+      },
+      "capability": "commercial.business_model",
+      "critical": false,
+      "evidence": {
+        "artifacts": [
+          "evidence.jsonl"
+        ],
+        "required": true
+      },
+      "intent": "تنفيذ هذه القدرة بحسب عقدتها",
+      "ir_version": "1.0",
+      "redundancy": {
+        "ensemble": [
+          "local",
+          "api",
+          "fallback"
+        ],
+        "min_agreement": 1
+      },
+      "steps": [
+        {
+          "action": "نموذج العمل ومسار الإيراد",
+          "agent": "model_builder",
+          "id": "s1",
+          "tools": [
+            "model.generate",
+            "vector.search"
+          ]
+        }
+      ]
+    },
+    "commercial.idea_framing": {
+      "authority": 1,
+      "budget": {
+        "max_cost_usd": 1.0,
+        "max_tokens": 20000,
+        "max_wall_seconds": 300
+      },
+      "capability": "commercial.idea_framing",
+      "critical": false,
+      "evidence": {
+        "artifacts": [
+          "evidence.jsonl"
+        ],
+        "required": true
+      },
+      "intent": "تنفيذ هذه القدرة بحسب عقدتها",
+      "ir_version": "1.0",
+      "redundancy": {
+        "ensemble": [
+          "local",
+          "api",
+          "fallback"
+        ],
+        "min_agreement": 1
+      },
+      "steps": [
+        {
+          "action": "صياغة الفكرة وعرضها على لوحة المجتمع",
+          "agent": "idea_framer",
+          "id": "s1",
+          "tools": [
+            "model.generate"
+          ]
+        }
+      ]
+    },
+    "commercial.market_research": {
+      "authority": 1,
+      "budget": {
+        "max_cost_usd": 1.0,
+        "max_tokens": 20000,
+        "max_wall_seconds": 300
+      },
+      "capability": "commercial.market_research",
+      "critical": false,
+      "evidence": {
+        "artifacts": [
+          "evidence.jsonl"
+        ],
+        "required": true
+      },
+      "intent": "تنفيذ هذه القدرة بحسب عقدتها",
+      "ir_version": "1.0",
+      "redundancy": {
+        "ensemble": [
+          "local",
+          "api",
+          "fallback"
+        ],
+        "min_agreement": 1
+      },
+      "steps": [
+        {
+          "action": "بحث السوق والمنافسين",
+          "agent": "market_researcher",
+          "id": "s1",
+          "tools": [
+            "http.get",
+            "vector.search"
+          ]
+        }
+      ]
+    },
+    "commercial.pricing": {
+      "authority": 2,
+      "budget": {
+        "max_cost_usd": 1.0,
+        "max_tokens": 20000,
+        "max_wall_seconds": 300
+      },
+      "capability": "commercial.pricing",
+      "critical": true,
+      "evidence": {
+        "artifacts": [
+          "evidence.jsonl"
+        ],
+        "required": true
+      },
+      "intent": "تنفيذ هذه القدرة بحسب عقدتها",
+      "ir_version": "1.0",
+      "redundancy": {
+        "ensemble": [
+          "api",
+          "local",
+          "fallback"
+        ],
+        "min_agreement": 2
+      },
+      "steps": [
+        {
+          "action": "التسعير المبرَّر برقم",
+          "agent": "pricer",
+          "id": "s1",
+          "tools": [
+            "model.generate",
+            "vector.search"
+          ]
+        }
+      ]
+    },
+    "community.community_test": {
+      "authority": 2,
+      "budget": {
+        "max_cost_usd": 1.0,
+        "max_tokens": 20000,
+        "max_wall_seconds": 300
+      },
+      "capability": "community.community_test",
+      "critical": true,
+      "evidence": {
+        "artifacts": [
+          "evidence.jsonl"
+        ],
+        "required": true
+      },
+      "intent": "تنفيذ هذه القدرة بحسب عقدتها",
+      "ir_version": "1.0",
+      "redundancy": {
+        "ensemble": [
+          "api",
+          "fallback",
+          "local"
+        ],
+        "min_agreement": 2
+      },
+      "steps": [
+        {
+          "action": "اختبار المجتمع — بوابة واحدة بأربعة استدعاءات",
+          "agent": "community_tester",
+          "id": "s1",
+          "tools": [
+            "model.generate",
+            "http.get"
+          ]
+        }
+      ]
+    },
+    "data.app_template": {
+      "authority": 1,
+      "budget": {
+        "max_cost_usd": 1.0,
+        "max_tokens": 20000,
+        "max_wall_seconds": 300
+      },
+      "capability": "data.app_template",
+      "critical": false,
+      "evidence": {
+        "artifacts": [
+          "evidence.jsonl"
+        ],
+        "required": true
+      },
+      "intent": "تنفيذ هذه القدرة بحسب عقدتها",
+      "ir_version": "1.0",
+      "redundancy": {
+        "ensemble": [
+          "local",
+          "api",
+          "fallback"
+        ],
+        "min_agreement": 1
+      },
+      "steps": [
+        {
+          "action": "قوالب web وandroid وios",
+          "agent": "template_builder",
+          "id": "s1",
+          "tools": [
+            "git.read",
+            "model.generate"
+          ]
+        }
+      ]
+    },
+    "data.data_pipeline": {
+      "authority": 2,
+      "budget": {
+        "max_cost_usd": 1.0,
+        "max_tokens": 20000,
+        "max_wall_seconds": 300
+      },
+      "capability": "data.data_pipeline",
+      "critical": true,
+      "evidence": {
+        "artifacts": [
+          "evidence.jsonl"
+        ],
+        "required": true
+      },
+      "intent": "تنفيذ هذه القدرة بحسب عقدتها",
+      "ir_version": "1.0",
+      "redundancy": {
+        "ensemble": [
+          "local",
+          "api",
+          "fallback"
+        ],
+        "min_agreement": 2
+      },
+      "steps": [
+        {
+          "action": "خط بيانات المنتج: من ملف المورّد إلى منشور",
+          "agent": "data_pipeline",
+          "id": "s1",
+          "tools": [
+            "model.generate",
+            "saleor.graphql",
+            "fs.write"
+          ]
+        }
+      ]
+    },
+    "engineering.code_merge": {
+      "authority": 1,
+      "budget": {
+        "max_cost_usd": 1.0,
+        "max_tokens": 20000,
+        "max_wall_seconds": 300
+      },
+      "capability": "engineering.code_merge",
+      "critical": false,
+      "evidence": {
+        "artifacts": [
+          "evidence.jsonl"
+        ],
+        "required": true
+      },
+      "intent": "تنفيذ هذه القدرة بحسب عقدتها",
+      "ir_version": "1.0",
+      "redundancy": {
+        "ensemble": [
+          "local",
+          "api",
+          "fallback"
+        ],
+        "min_agreement": 1
+      },
+      "steps": [
+        {
+          "action": "الدمج بعد اجتياز المراجعة والاختبار",
+          "agent": "code_merger",
+          "id": "s1",
+          "tools": [
+            "git.read",
+            "model.generate"
+          ]
+        }
+      ]
+    },
+    "engineering.code_review": {
+      "authority": 1,
+      "budget": {
+        "max_cost_usd": 1.0,
+        "max_tokens": 20000,
+        "max_wall_seconds": 300
+      },
+      "capability": "engineering.code_review",
+      "critical": true,
+      "evidence": {
+        "artifacts": [
+          "evidence.jsonl"
+        ],
+        "required": true
+      },
+      "intent": "تنفيذ هذه القدرة بحسب عقدتها",
+      "ir_version": "1.0",
+      "redundancy": {
+        "ensemble": [
+          "local",
+          "api",
+          "fallback"
+        ],
+        "min_agreement": 2
+      },
+      "steps": [
+        {
+          "action": "مراجعة الكود وفحص الثغرات",
+          "agent": "code_reviewer",
+          "id": "s1",
+          "tools": [
+            "git.read",
+            "model.generate"
+          ]
+        }
+      ]
+    },
+    "engineering.code_test": {
+      "authority": 1,
+      "budget": {
+        "max_cost_usd": 1.0,
+        "max_tokens": 20000,
+        "max_wall_seconds": 300
+      },
+      "capability": "engineering.code_test",
+      "critical": false,
+      "evidence": {
+        "artifacts": [
+          "evidence.jsonl"
+        ],
+        "required": true
+      },
+      "intent": "تنفيذ هذه القدرة بحسب عقدتها",
+      "ir_version": "1.0",
+      "redundancy": {
+        "ensemble": [
+          "local",
+          "api",
+          "fallback"
+        ],
+        "min_agreement": 1
+      },
+      "steps": [
+        {
+          "action": "كتابة الاختبارات وتشغيلها",
+          "agent": "test_engineer",
+          "id": "s1",
+          "tools": [
+            "git.read",
+            "model.generate"
+          ]
+        }
+      ]
+    },
+    "engineering.payment_interface": {
+      "authority": 3,
+      "budget": {
+        "max_cost_usd": 1.0,
+        "max_tokens": 20000,
+        "max_wall_seconds": 300
+      },
+      "capability": "engineering.payment_interface",
+      "critical": true,
+      "evidence": {
+        "artifacts": [
+          "evidence.jsonl"
+        ],
+        "required": true
+      },
+      "intent": "تنفيذ هذه القدرة بحسب عقدتها",
+      "ir_version": "1.0",
+      "redundancy": {
+        "ensemble": [
+          "local",
+          "api",
+          "fallback"
+        ],
+        "min_agreement": 2
+      },
+      "steps": [
+        {
+          "action": "واجهة الدفع والعقود",
+          "agent": "payment_engineer",
+          "id": "s1",
+          "tools": [
+            "model.generate",
+            "http.post"
+          ]
+        }
+      ]
+    },
+    "experience.ui_build": {
+      "authority": 1,
+      "budget": {
+        "max_cost_usd": 1.0,
+        "max_tokens": 20000,
+        "max_wall_seconds": 300
+      },
+      "capability": "experience.ui_build",
+      "critical": false,
+      "evidence": {
+        "artifacts": [
+          "evidence.jsonl"
+        ],
+        "required": true
+      },
+      "intent": "تنفيذ هذه القدرة بحسب عقدتها",
+      "ir_version": "1.0",
+      "redundancy": {
+        "ensemble": [
+          "local",
+          "api",
+          "fallback"
+        ],
+        "min_agreement": 1
+      },
+      "steps": [
+        {
+          "action": "بناء الواجهة",
+          "agent": "ui_builder",
+          "id": "s1",
+          "tools": [
+            "model.generate",
+            "git.read"
+          ]
+        }
+      ]
+    },
+    "experience.ui_design": {
+      "authority": 1,
+      "budget": {
+        "max_cost_usd": 1.0,
+        "max_tokens": 20000,
+        "max_wall_seconds": 300
+      },
+      "capability": "experience.ui_design",
+      "critical": false,
+      "evidence": {
+        "artifacts": [
+          "evidence.jsonl"
+        ],
+        "required": true
+      },
+      "intent": "تنفيذ هذه القدرة بحسب عقدتها",
+      "ir_version": "1.0",
+      "redundancy": {
+        "ensemble": [
+          "local",
+          "api",
+          "fallback"
+        ],
+        "min_agreement": 1
+      },
+      "steps": [
+        {
+          "action": "تصميم الواجهة والأيقونات",
+          "agent": "ui_designer",
+          "id": "s1",
+          "tools": [
+            "model.generate",
+            "render.image"
+          ]
+        }
+      ]
+    },
+    "experience.ui_review": {
+      "authority": 1,
+      "budget": {
+        "max_cost_usd": 1.0,
+        "max_tokens": 20000,
+        "max_wall_seconds": 300
+      },
+      "capability": "experience.ui_review",
+      "critical": false,
+      "evidence": {
+        "artifacts": [
+          "evidence.jsonl"
+        ],
+        "required": true
+      },
+      "intent": "تنفيذ هذه القدرة بحسب عقدتها",
+      "ir_version": "1.0",
+      "redundancy": {
+        "ensemble": [
+          "local",
+          "api",
+          "fallback"
+        ],
+        "min_agreement": 1
+      },
+      "steps": [
+        {
+          "action": "مراجعة الواجهة وقبولها",
+          "agent": "ui_reviewer",
+          "id": "s1",
+          "tools": [
+            "model.generate",
+            "render.image"
+          ]
+        }
+      ]
+    },
+    "quality.compliance_review": {
+      "authority": 2,
+      "budget": {
+        "max_cost_usd": 1.0,
+        "max_tokens": 20000,
+        "max_wall_seconds": 300
+      },
+      "capability": "quality.compliance_review",
+      "critical": false,
+      "evidence": {
+        "artifacts": [
+          "evidence.jsonl"
+        ],
+        "required": true
+      },
+      "intent": "تنفيذ هذه القدرة بحسب عقدتها",
+      "ir_version": "1.0",
+      "redundancy": {
+        "ensemble": [
+          "local",
+          "api",
+          "fallback"
+        ],
+        "min_agreement": 1
+      },
+      "steps": [
+        {
+          "action": "مراجعة الامتثال وسياسات المنصة",
+          "agent": "compliance_reviewer",
+          "id": "s1",
+          "tools": [
+            "model.generate",
+            "vector.search"
+          ]
+        }
+      ]
+    },
+    "quality.data_security": {
+      "authority": 1,
+      "budget": {
+        "max_cost_usd": 1.0,
+        "max_tokens": 20000,
+        "max_wall_seconds": 300
+      },
+      "capability": "quality.data_security",
+      "critical": true,
+      "evidence": {
+        "artifacts": [
+          "evidence.jsonl"
+        ],
+        "required": true
+      },
+      "intent": "تنفيذ هذه القدرة بحسب عقدتها",
+      "ir_version": "1.0",
+      "redundancy": {
+        "ensemble": [
+          "local",
+          "api",
+          "fallback"
+        ],
+        "min_agreement": 2
+      },
+      "steps": [
+        {
+          "action": "فحص أمن البيانات والصلاحيات",
+          "agent": "security_inspector",
+          "id": "s1",
+          "tools": [
+            "git.read",
+            "model.generate"
+          ]
+        }
+      ]
+    },
+    "quality.load_test": {
+      "authority": 1,
+      "budget": {
+        "max_cost_usd": 1.0,
+        "max_tokens": 20000,
+        "max_wall_seconds": 300
+      },
+      "capability": "quality.load_test",
+      "critical": false,
+      "evidence": {
+        "artifacts": [
+          "evidence.jsonl"
+        ],
+        "required": true
+      },
+      "intent": "تنفيذ هذه القدرة بحسب عقدتها",
+      "ir_version": "1.0",
+      "redundancy": {
+        "ensemble": [
+          "local",
+          "api",
+          "fallback"
+        ],
+        "min_agreement": 1
+      },
+      "steps": [
+        {
+          "action": "اختبار الحمل والضغط",
+          "agent": "load_tester",
+          "id": "s1",
+          "tools": [
+            "http.get",
+            "model.generate"
+          ]
+        }
+      ]
+    },
+    "quality.penetration_test": {
+      "authority": 2,
+      "budget": {
+        "max_cost_usd": 1.0,
+        "max_tokens": 20000,
+        "max_wall_seconds": 300
+      },
+      "capability": "quality.penetration_test",
+      "critical": false,
+      "evidence": {
+        "artifacts": [
+          "evidence.jsonl"
+        ],
+        "required": true
+      },
+      "intent": "تنفيذ هذه القدرة بحسب عقدتها",
+      "ir_version": "1.0",
+      "redundancy": {
+        "ensemble": [
+          "local",
+          "api",
+          "fallback"
+        ],
+        "min_agreement": 1
+      },
+      "steps": [
+        {
+          "action": "اختبار الاختراق",
+          "agent": "penetration_tester",
+          "id": "s1",
+          "tools": [
+            "http.get",
+            "model.generate"
+          ]
+        }
+      ]
+    },
+    "release.release_publish": {
+      "authority": 3,
+      "budget": {
+        "max_cost_usd": 1.0,
+        "max_tokens": 20000,
+        "max_wall_seconds": 300
+      },
+      "capability": "release.release_publish",
+      "critical": true,
+      "evidence": {
+        "artifacts": [
+          "evidence.jsonl"
+        ],
+        "required": true
+      },
+      "intent": "تنفيذ هذه القدرة بحسب عقدتها",
+      "ir_version": "1.0",
+      "redundancy": {
+        "ensemble": [
+          "local",
+          "api",
+          "fallback"
+        ],
+        "min_agreement": 2
+      },
+      "steps": [
+        {
+          "action": "النشر والمراقبة",
+          "agent": "release_publisher",
+          "id": "s1",
+          "tools": [
+            "http.post",
+            "model.generate"
+          ]
+        }
+      ]
+    },
+    "release.release_qa": {
+      "authority": 1,
+      "budget": {
+        "max_cost_usd": 1.0,
+        "max_tokens": 20000,
+        "max_wall_seconds": 300
+      },
+      "capability": "release.release_qa",
+      "critical": false,
+      "evidence": {
+        "artifacts": [
+          "evidence.jsonl"
+        ],
+        "required": true
+      },
+      "intent": "تنفيذ هذه القدرة بحسب عقدتها",
+      "ir_version": "1.0",
+      "redundancy": {
+        "ensemble": [
+          "local",
+          "api",
+          "fallback"
+        ],
+        "min_agreement": 1
+      },
+      "steps": [
+        {
+          "action": "فحص الإصدار النهائي",
+          "agent": "release_inspector",
+          "id": "s1",
+          "tools": [
+            "git.read",
+            "model.generate"
+          ]
+        }
+      ]
+    },
+    "release.release_signing": {
+      "authority": 3,
+      "budget": {
+        "max_cost_usd": 1.0,
+        "max_tokens": 20000,
+        "max_wall_seconds": 300
+      },
+      "capability": "release.release_signing",
+      "critical": false,
+      "evidence": {
+        "artifacts": [
+          "evidence.jsonl"
+        ],
+        "required": true
+      },
+      "intent": "تنفيذ هذه القدرة بحسب عقدتها",
+      "ir_version": "1.0",
+      "redundancy": {
+        "ensemble": [
+          "local",
+          "api",
+          "fallback"
+        ],
+        "min_agreement": 1
+      },
+      "steps": [
+        {
+          "action": "توقيع حزمة الإصدار",
+          "agent": "release_signer",
+          "id": "s1",
+          "tools": [
+            "model.generate"
+          ]
+        }
+      ]
+    },
+    "research.project_evaluation": {
+      "authority": 1,
+      "budget": {
+        "max_cost_usd": 1.0,
+        "max_tokens": 20000,
+        "max_wall_seconds": 300
+      },
+      "capability": "research.project_evaluation",
+      "critical": false,
+      "evidence": {
+        "artifacts": [
+          "evidence.jsonl"
+        ],
+        "required": true
+      },
+      "intent": "تنفيذ هذه القدرة بحسب عقدتها",
+      "ir_version": "1.0",
+      "redundancy": {
+        "ensemble": [
+          "local",
+          "api",
+          "fallback"
+        ],
+        "min_agreement": 1
+      },
+      "steps": [
+        {
+          "action": "تقييم المشروع بمعيار معلن",
+          "agent": "project_evaluator",
+          "id": "s1",
+          "tools": [
+            "vector.search",
+            "model.generate"
+          ]
+        }
+      ]
+    },
+    "research.project_research": {
+      "authority": 1,
+      "budget": {
+        "max_cost_usd": 1.0,
+        "max_tokens": 20000,
+        "max_wall_seconds": 300
+      },
+      "capability": "research.project_research",
+      "critical": false,
+      "evidence": {
+        "artifacts": [
+          "evidence.jsonl"
+        ],
+        "required": true
+      },
+      "intent": "تنفيذ هذه القدرة بحسب عقدتها",
+      "ir_version": "1.0",
+      "redundancy": {
+        "ensemble": [
+          "local",
+          "api",
+          "fallback"
+        ],
+        "min_agreement": 1
+      },
+      "steps": [
+        {
+          "action": "بحث المشروع ومصدره ورخصته",
+          "agent": "project_researcher",
+          "id": "s1",
+          "tools": [
+            "http.get",
+            "git.read",
+            "vector.search"
+          ]
+        }
+      ]
+    },
+    "research.project_selection": {
+      "authority": 2,
+      "budget": {
+        "max_cost_usd": 1.0,
+        "max_tokens": 20000,
+        "max_wall_seconds": 300
+      },
+      "capability": "research.project_selection",
+      "critical": false,
+      "evidence": {
+        "artifacts": [
+          "evidence.jsonl"
+        ],
+        "required": true
+      },
+      "intent": "تنفيذ هذه القدرة بحسب عقدتها",
+      "ir_version": "1.0",
+      "redundancy": {
+        "ensemble": [
+          "local",
+          "api",
+          "fallback"
+        ],
+        "min_agreement": 1
+      },
+      "steps": [
+        {
+          "action": "اختيار مشروع واحد وبتعليل مكتوب",
+          "agent": "project_selector",
+          "id": "s1",
+          "tools": [
+            "model.generate"
+          ]
+        }
+      ]
+    }
+  },
+  "count": 24,
+  "generated_from": "src/maestro/company/catalogue.py"
+}

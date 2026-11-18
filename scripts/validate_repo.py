@@ -49,6 +49,9 @@ REQUIRED_FILES: tuple[str, ...] = (
     "src/maestro/producers/idea.py",
     "src/maestro/producers/research.py",
     "src/maestro/producers/structured.py",
+    "src/maestro/company/contracts.py",
+    "scripts/contracts_report.py",
+    "docs/CAPABILITY_CONTRACTS.json",
     "src/maestro/doctor/check.py",
     "src/maestro/estimation/cost.py",
     "src/maestro/routing/local.py",
@@ -191,6 +194,18 @@ def check_company_catalogue() -> None:
         _fail(f"وثيقة الكتالوج انحرفت عن الشيفرة:\n{result.stdout}{result.stderr}")
 
 
+def check_capability_contracts() -> None:
+    """عقود القدرات مبنيّة من الكتالوج، ومطابقة له، وقابلة للتنفيذ."""
+    result = subprocess.run(
+        [sys.executable, "scripts/contracts_report.py", "--check"],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+    )
+    if result.returncode != 0:
+        _fail(f"عقود القدرات:\n{result.stdout}{result.stderr}")
+
+
 def check_acceptance_evidence() -> None:
     """وثيقة الدليل مطابقة للشيفرة (والشواهد تُشغَّل في خط الأنابيب)."""
     result = subprocess.run(
@@ -214,6 +229,7 @@ def main() -> int:
         check_ci_is_strict,
         check_protocol_declares_no_error_rates,
         check_company_catalogue,
+        check_capability_contracts,
         check_acceptance_evidence,
     )
     for check in checks:
