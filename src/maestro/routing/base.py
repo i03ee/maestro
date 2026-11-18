@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+import json
+from dataclasses import dataclass, field, replace
 from typing import Protocol, Sequence
 
 
@@ -20,6 +21,8 @@ class ModelProfile:
     supports_vision: bool = False
     api_key_env: str | None = None
     base_url: str | None = None
+    #: جسم إضافي بصيغة JSON يُدمج في طلب المزوّد (مثل `reasoning`).
+    extra_body: str = ""
 
     def estimate_cost(self, tokens_in: int, tokens_out: int) -> float:
         """تكلفة الطلب بالدولار، محسوبة من سعر المليون رمز."""
@@ -27,6 +30,14 @@ class ModelProfile:
             tokens_in / 1_000_000 * self.cost_in_per_mtok
             + tokens_out / 1_000_000 * self.cost_out_per_mtok
         )
+
+
+def with_extra_body(profile: ModelProfile, body: dict) -> ModelProfile:
+    """نسخة من بطاقة النموذج بعد إضافة جسم JSON إلى الطلب.
+
+    يُخزَّن JSON كنصّ ليبقى الملف قابلاً للتسلسل والمقارنة بلا مسائل hash.
+    """
+    return replace(profile, extra_body=json.dumps(body, ensure_ascii=False, sort_keys=True))
 
 
 @dataclass(frozen=True)
