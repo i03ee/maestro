@@ -1,0 +1,22 @@
+{
+  "ir_version": "1.0",
+  "capability": "media.render",
+  "intent": "تحويل وصف منتج إلى صورة بطاقة عرض جاهزة للنشر",
+  "authority": 1,
+  "steps": [
+    {
+      "id": "s1",
+      "agent": "visual_prompt_writer",
+      "action": "كتابة الوصف البصري",
+      "tools": ["model.generate"]
+    },
+    {
+      "id": "s2",
+      "agent": "visual_renderer",
+      "action": "توليد الصورة",
+      "tools": ["render.image"],
+      "budget": {"max_tokens": 4000, "max_cost_usd": 0.1}
+    }
+  ],
+  "budget": {"max_tokens": 12000, "max_cost_usd": 0.5, "max_wall_seconds": 120}
+}

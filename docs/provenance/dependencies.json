@@ -1,0 +1,42 @@
+{
+  "allow": [
+    {
+      "name": "pydantic-ai-slim",
+      "license": "MIT",
+      "source": "https://pypi.org/project/pydantic-ai/",
+      "rationale_ar": "نواة تنفيذ الوكلاء والعقود والمهام المتينة. رخصة MIT تسمح بالاستعمال والتوزيع داخل مشروع مملوك."
+    },
+    {
+      "name": "setuptools",
+      "license": "MIT",
+      "source": "https://pypi.org/project/setuptools/",
+      "rationale_ar": "أداة البناء فقط؛ لا تدخل في الكود المشغَّل."
+    }
+  ],
+  "deny": [
+    {
+      "name": "k6",
+      "license": "AGPL-3.0",
+      "source": "https://github.com/grafana/k6",
+      "rationale_ar": "ترخيص نسخ قسري (copyleft)؛ لا يُدمج داخل المستودع. طبقة الحمل في MAESTRO تستعمل Locust (MIT)."
+    },
+    {
+      "name": "mobSF",
+      "license": "GPL-3.0",
+      "source": "https://github.com/MobSF/Mobile-Security-Framework-MobSF",
+      "rationale_ar": "GPL يمنع الدمج. يُستعمل كخدمة معزولة داخل الشبكة الداخلية، ومخرجاته ملفتات مدقّقة فقط."
+    },
+    {
+      "name": "frida",
+      "license": "non-OSI",
+      "source": "https://github.com/frida/frida",
+      "rationale_ar": "رخصة غير معتمدة من OSI؛ لا تدخل بناءً افتراضياً إلا بمراجعة قانونية صريحة."
+    },
+    {
+      "name": "saleor-storefront",
+      "license": "FSL-1.1",
+      "source": "https://github.com/saleor/storefront",
+      "rationale_ar": "قيد تنافسي يمنع استعماله في مشروع تجاري منافس. مرفوضة."
+    }
+  ]
+}

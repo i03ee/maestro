@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "maestro-core"
+version = "0.1.0"
+description = "MAESTRO — core of the agents micro-company: IR contracts, routing, guards, evidence"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "MAESTRO project" }]
+keywords = ["agents", "contracts", "routing", "provenance"]
+# النواة بلا تبعيات وقت التشغيل: كل ما فيها من المكتبة القياسية.
+# هذا مقصود — التشغيل المحلي مجاني وبلا شبكة.
+dependencies = []
+
+[project.optional-dependencies]
+# طبقة الوكلاء (PydanticAI). تُثبَّت عند الحاجة، ولا تدخل البوابات الأساسية.
+agent = ["pydantic-ai-slim>=2.60"]
+
+[tool.setuptools.packages.find]
+where = ["src"]

@@ -1,0 +1,88 @@
+{
+  "base": "ir_valid_minimal.json",
+  "cases": [
+    {"id": "version", "expect_rule": "IR-01", "mutations": {"ir_version": "0.9"}},
+    {"id": "capability", "expect_rule": "IR-02", "mutations": {"capability": "Media"}},
+    {"id": "intent", "expect_rule": "IR-03", "mutations": {"intent": ""}},
+    {"id": "authority_range", "expect_rule": "IR-04", "mutations": {"authority": 4}},
+    {"id": "authority_approval", "expect_rule": "IR-04", "mutations": {"authority": 3}},
+    {"id": "steps_empty", "expect_rule": "IR-05", "mutations": {"steps": []}},
+    {
+      "id": "duplicate_step_ids",
+      "expect_rule": "IR-06",
+      "mutations": {
+        "steps": [
+          {"id": "s1", "agent": "alpha", "tools": []},
+          {"id": "s1", "agent": "beta", "tools": []}
+        ]
+      }
+    },
+    {
+      "id": "missing_agent",
+      "expect_rule": "IR-07",
+      "mutations": {"steps": [{"id": "s1", "agent": "", "tools": []}]}
+    },
+    {
+      "id": "tool_not_allowed",
+      "expect_rule": "IR-08",
+      "mutations": {"steps": [{"id": "s1", "agent": "alpha", "tools": ["shell.exec"]}]}
+    },
+    {
+      "id": "budget_ceiling",
+      "expect_rule": "IR-09",
+      "mutations": {
+        "budget": {"max_tokens": 12000, "max_cost_usd": 99, "max_wall_seconds": 120}
+      }
+    },
+    {
+      "id": "step_budget_escape",
+      "expect_rule": "IR-10",
+      "mutations": {
+        "steps": [
+          {
+            "id": "s1",
+            "agent": "alpha",
+            "tools": [],
+            "budget": {"max_tokens": 999999, "max_cost_usd": 0.5}
+          }
+        ]
+      }
+    },
+    {
+      "id": "critical_deadline",
+      "expect_rule": "IR-11",
+      "mutations": {
+        "capability": "catalog.ingest",
+        "critical": true,
+        "redundancy": {"ensemble": ["local", "api"], "min_agreement": 2},
+        "evidence": {"required": true, "artifacts": ["catalog.json"]},
+        "budget": {"max_tokens": 12000, "max_cost_usd": 0.5, "max_wall_seconds": 900}
+      }
+    },
+    {
+      "id": "critical_agreement",
+      "expect_rule": "IR-12",
+      "mutations": {
+        "capability": "catalog.ingest",
+        "critical": true,
+        "redundancy": {"ensemble": ["local", "api"], "min_agreement": 1},
+        "evidence": {"required": true, "artifacts": ["catalog.json"]}
+      }
+    },
+    {
+      "id": "critical_evidence",
+      "expect_rule": "IR-13",
+      "mutations": {
+        "capability": "catalog.ingest",
+        "critical": true,
+        "redundancy": {"ensemble": ["local", "api"], "min_agreement": 2},
+        "evidence": {"required": false, "artifacts": []}
+      }
+    },
+    {
+      "id": "secret_in_inputs",
+      "expect_rule": "IR-14",
+      "mutations": {"inputs": {"api_key": "sk-abcdefghijklmnopqrstuvwxyz012345"}}
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "ir_version": "1.0",
+  "capability": "catalog.ingest",
+  "intent": "تحويل ملف مورّد إلى منتجات منشورة بثلاث لغات مع دليل",
+  "authority": 2,
+  "critical": true,
+  "steps": [
+    {
+      "id": "s1",
+      "agent": "catalog_writer",
+      "action": "كتابة بطاقة المنتج وترجمتها",
+      "tools": ["saleor.graphql", "model.generate"]
+    }
+  ],
+  "budget": {"max_tokens": 20000, "max_cost_usd": 1.0, "max_wall_seconds": 240},
+  "redundancy": {"ensemble": ["local", "api", "fallback"], "min_agreement": 2},
+  "evidence": {"required": true, "artifacts": ["catalog.json", "evidence.jsonl"]}
+}
