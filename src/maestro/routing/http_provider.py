@@ -20,6 +20,10 @@ from dataclasses import dataclass
 from .base import CompletionRequest, CompletionResponse, ModelProfile
 
 
+#: معرّف عميل صريح: بعض البوابات (Cloudflare) ترفض الطلبات بلا متصفّح.
+USER_AGENT = "maestro/0.1 (+https://github.com/i03ee/maestro)"
+
+
 class ProviderError(RuntimeError):
     """فشل المزوّد: رفض الخادم، أو ردّ غير متوقع."""
 
@@ -65,6 +69,9 @@ class OpenAICompatibleProvider:
         headers = {
             "Content-Type": "application/json",
             "Accept": "application/json",
+            # بلا هذا يحجب Cloudflare (Groq وOpenRouter) الطلب بـ403/1010
+            # لأن توقيع «Python-urllib» يُقرأ كزاحف.
+            "User-Agent": USER_AGENT,
         }
         if profile.api_key_env:
             headers["Authorization"] = f"Bearer {os.environ[profile.api_key_env]}"

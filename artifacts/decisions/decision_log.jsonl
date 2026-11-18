@@ -1,0 +1,8 @@
+{"decision": "allow", "name": "Apache Lucene", "reason": "مكتبة فهرسة وبحث Apache-2.0 تتضمن محللات للعربية والكردية السورانية مثل ArabicAnalyzer وSoraniAnalyzer."}
+{"decision": "allow", "name": "OpenSearch", "reason": "محرك بحث وفهرسة Apache-2.0 مبني على Lucene ومناسب لفهرسة المنتجات والبحث متعدد اللغات."}
+{"decision": "allow", "name": "Meilisearch", "reason": "محرك بحث خفيف بترخيص MIT مناسب للفهرسة والبحث السريع عن المنتجات."}
+{"decision": "deny", "name": "Typesense", "reason": "محرك بحث سريع لكنه بترخيص GPL-3.0 الذي يفرض شروط copyleft ولا يتوافق مع سياسة القبول."}
+{"decision": "allow", "name": "Hyperswitch", "reason": "موجّه دفع مفتوح المصدر بترخيص Apache-2.0 يدعم تكاملات دفع متعددة ويمكن إعادة استخدامه."}
+{"decision": "allow", "name": "Omnipay", "reason": "مكتبة تجريد بوابات دفع بترخيص MIT قابلة لإعادة الاستخدام في تطبيقات PHP."}
+{"decision": "allow", "name": "Fastlane", "reason": "أداة بترخيص MIT لأتمتة بناء ونشر تطبيقات أندرويد إلى Google Play."}
+{"decision": "allow", "name": "Gradle Play Publisher", "reason": "إضافة Gradle بترخيص Apache-2.0 لنشر تطبيقات أندرويد وإدارة إصدارات Google Play."}

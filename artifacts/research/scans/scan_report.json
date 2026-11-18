@@ -1,0 +1,50 @@
+[
+  {
+    "name": "Apache Lucene",
+    "spdx": "Apache-2.0",
+    "scan_result": "clean",
+    "source": "https://github.com/apache/lucene"
+  },
+  {
+    "name": "OpenSearch",
+    "spdx": "Apache-2.0",
+    "scan_result": "clean",
+    "source": "https://github.com/opensearch-project/OpenSearch"
+  },
+  {
+    "name": "Meilisearch",
+    "spdx": "MIT",
+    "scan_result": "clean",
+    "source": "https://github.com/meilisearch/meilisearch"
+  },
+  {
+    "name": "Typesense",
+    "spdx": "GPL-3.0",
+    "scan_result": "flagged",
+    "source": "https://github.com/typesense/typesense"
+  },
+  {
+    "name": "Hyperswitch",
+    "spdx": "Apache-2.0",
+    "scan_result": "clean",
+    "source": "https://github.com/juspay/hyperswitch"
+  },
+  {
+    "name": "Omnipay",
+    "spdx": "MIT",
+    "scan_result": "clean",
+    "source": "https://github.com/thephpleague/omnipay"
+  },
+  {
+    "name": "Fastlane",
+    "spdx": "MIT",
+    "scan_result": "clean",
+    "source": "https://github.com/fastlane/fastlane"
+  },
+  {
+    "name": "Gradle Play Publisher",
+    "spdx": "Apache-2.0",
+    "scan_result": "clean",
+    "source": "https://github.com/Triple-T/gradle-play-publisher"
+  }
+]

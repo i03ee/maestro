@@ -10,9 +10,9 @@
 | المعيار | العنوان | الدليل المسمّى | الحالة | الشاهد |
 |---|---|---|---|---|
 | AC-01 | استقبال فكرة | `cli/run_request.json` | مُثبَت — بشواهد حيّة تُنفَّذ في كل تشغيل | `cli_run_creates_project` |
-| AC-02 | تحويل الفكرة إلى متطلبات | `artifacts/prd.md, user_stories.json` | مُثبَت — بشواهد آلية — البيانات الحيّة معلّقة (تحتاج DEEPSEEK_API_KEY) | `idea_produces_prd` |
-| AC-03 | تحليل منافسين | `artifacts/market/competitor_matrix.csv` | مُثبَت — بشواهد آلية — البيانات الحيّة معلّقة (تحتاج DEEPSEEK_API_KEY) | `research_produces_competitors` |
-| AC-04 | البحث عن مكونات | `artifacts/research/candidates.jsonl` | مُثبَت — بشواهد آلية — البيانات الحيّة معلّقة (تحتاج DEEPSEEK_API_KEY) | `research_produces_candidates` |
+| AC-02 | تحويل الفكرة إلى متطلبات | `artifacts/prd.md, user_stories.json` | مُثبَت — شاهد آليّ (الآلية مُتحقَّقة) + artefact حيّ من نموذج حقيقي في artifacts/ | `idea_produces_prd` |
+| AC-03 | تحليل منافسين | `artifacts/market/competitor_matrix.csv` | مُثبَت — شاهد آليّ (الآلية مُتحقَّقة) + artefact حيّ من نموذج حقيقي في artifacts/ | `research_produces_competitors` |
+| AC-04 | البحث عن مكونات | `artifacts/research/candidates.jsonl` | مُثبَت — شاهد آليّ (الآلية مُتحقَّقة) + artefact حيّ من نموذج حقيقي في artifacts/ | `research_produces_candidates` |
 | AC-05 | تقييم التراخيص والتبعيات | `artifacts/research/scans/` | مُثبَت — بشواهد حيّة تُنفَّذ في كل تشغيل | `licenses_decided` |
 | AC-06 | تسجيل قرارات إعادة الاستخدام | `artifacts/decisions/decision_log.jsonl` | مُثبَت — بشواهد حيّة تُنفَّذ في كل تشغيل | `reuse_decisions_recorded` |
 | AC-07 | AppIR قابل للتحقق | `appir/appir.json + validate_report.json` | مُثبَت — بشواهد حيّة تُنفَّذ في كل تشغيل | `ir_rules_reject_negatives` |
