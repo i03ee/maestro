@@ -37,6 +37,17 @@ PYTHONPATH=src python3 -m unittest discover -s tests -v
 
 كلها **ثنائية**: تجتاز أو تفشل. لا عتبات نسبية.
 
+## كل البوابات في أمر واحد
+
+```bash
+python3 scripts/verify_all.py                      # كل البوابات الثماني
+python3 scripts/verify_all.py --only ثوابت\ المستودع,التراخيص   # بوابة أو اثنتان
+python3 scripts/verify_all.py --json reports/verify_all.json
+```
+
+الترتيب ثابت (من الأسفل إلى الأعلى) وكل بوابة ثنائية. `--stop-on-failure`
+يوقف عند أول فشل.
+
 ## أوامر التشغيل
 
 ```bash
