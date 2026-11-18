@@ -17,7 +17,7 @@ dependencies = []
 
 [project.optional-dependencies]
 # طبقة الوكلاء (PydanticAI). تُثبَّت عند الحاجة، ولا تدخل البوابات الأساسية.
-agent = ["pydantic-ai-slim>=2.60"]
+agent = ["pydantic-ai-slim[openai]>=2.68"]
 
 [tool.setuptools.packages.find]
 where = ["src"]
